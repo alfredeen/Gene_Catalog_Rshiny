@@ -60,11 +60,11 @@ RUN mkdir /data \
 
 
 RUN rm -rf /srv/shiny-server/*
-COPY /app/ /srv/shiny-server/app
-COPY .Renviron.template /srv/shiny-server/app/.Renviron
+COPY /app/ /srv/shiny-server/
+COPY .Renviron.template /srv/shiny-server/.Renviron
 COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 
-WORKDIR /srv/shiny-server/app
+WORKDIR /srv/shiny-server/
 
 RUN chown -R shiny:shiny . && \
     chmod ug+x start-script.sh
