@@ -13,9 +13,9 @@ source("verify-setup.R")
 tryCatch({
   source("app_functions.R")
 }, error=function(e) {
-    log4r::warn(file_logger, e)
+    log4r::warn(logger, e)
 }, warning=function(e) {
-    log4r::warn(file_logger, e)
+    log4r::warn(logger, e)
 })
 
 

@@ -1,5 +1,5 @@
 # Use an official R runtime as a parent image
-FROM rocker/shiny:latest
+FROM rocker/shiny:4.4
 #  "shiny"
 
 ENV USER=shiny
@@ -27,26 +27,8 @@ RUN apt-get update && \
 ENV PATH="/opt/ncbi-blast-2.13.0+/bin:${PATH}"
 
 # Install Basic Utility R Packages
-
-RUN R -e "install.packages('remotes')" \
-    && R -e "install.packages('BiocManager')" \
-    && R -e "BiocManager::install('KEGGREST')" \
-    && R -e "remotes::install_version('rBLAST', repos = 'https://bioc.r-universe.dev', dependencies= T, version='1.5.0')" \
-    && R -e "remotes::install_version('tidyverse', version = '2.0.0', dependencies= T)" \
-    && R -e "remotes::install_version('arrow', version = '14.0.0', dependencies= T)" \
-    && R -e "remotes::install_version('data.table', version = '1.14.8', dependencies= T)" \
-    #&& R -e "remotes::install_version('rBLAST', repos = 'https://mhahsler.r-universe.dev', dependencies= T, version='0.99.0')" \
-    #&& R -e "remotes::install_github('mhahsler/rBLAST', dependencies= T)" \
-    && R -e "remotes::install_version('leaflet', version = '2.1.2', dependencies= T)" \
-    && R -e "remotes::install_version('sp', version = '1.6-1', dependencies= T)" \
-    && R -e "remotes::install_version('magrittr', version = '2.0.3', dependencies= T)" \
-    && R -e "remotes::install_version('shinythemes', version = '1.2.0', dependencies= T)" \
-    && R -e "remotes::install_version('DT', version = '0.28', dependencies= T)" \
-    && R -e "remotes::install_version('shinyjs', version = '2.1.0', dependencies= T)" \
-    && R -e "remotes::install_version('vembedr', version = '0.1.5', dependencies= T)" \
-    && R -e "remotes::install_version('multidplyr', version = '0.1.3', dependencies= T)" \
-    && R -e "remotes::install_version('shinybusy', version = '0.3.1', dependencies= T)"
-
+COPY install_packages.R /tmp/
+RUN Rscript /tmp/install_packages.R && rm /tmp/install_packages.R
 
 # Additional packages for logging and diagnosis
 RUN R -e "install.packages('log4r')" \
