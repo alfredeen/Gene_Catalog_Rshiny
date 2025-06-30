@@ -36,12 +36,6 @@ RUN R -e "install.packages('log4r')" \
     && R -e "install.packages('RcppTOML')"
 
 
-RUN mkdir /data \
-    && mkdir /rlogs \
-    && chown -R shiny:shiny /data \
-    && chown -R shiny:shiny /rlogs
-
-
 RUN rm -rf /srv/shiny-server/*
 COPY /app/ /srv/shiny-server/
 COPY .Renviron.template /srv/shiny-server/.Renviron
@@ -49,11 +43,21 @@ COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 
 WORKDIR /srv/shiny-server/
 
-RUN chown -R shiny:shiny . && \
-    chmod ug+x start-script.sh
+# Ensure that the expected user is present in the container
+RUN if id shiny &>/dev/null && [ "$(id -u shiny)" -ne 999 ]; then \
+        userdel -r shiny; \
+        id -u 999 &>/dev/null && userdel -r "$(id -un 999)"; \
+    fi; \
+    useradd -u 999 -m -s /bin/bash shiny; \
+    chown -R shiny:shiny /srv/shiny-server/ /var/lib/shiny-server/ /var/log/shiny-server/
 
+# Setup the data and rlogs directories
+RUN mkdir /data \
+    && mkdir /rlogs \
+    && chown -R shiny:shiny /data /rlogs
 
-USER $USER
+# Other settings
+USER shiny
 EXPOSE 3838
 
 CMD ["/usr/bin/shiny-server"]

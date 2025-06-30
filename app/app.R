@@ -138,16 +138,16 @@ shinyApp(
                           "that span the salinity and oxygen gradients of the Baltic Sea and capture seasonal dynamics at two locations.",br(),
                           "To obtain the gene catalogue, we used a mix-assembly approach described in Delgado et al. (2022).",br(),
                           "The gene catalogue has been functionally and taxonomically annotated, using the",
-                          a(href="https://github.com/EnvGen/mix_assembly_pipeline", " Mix-assembly Gene Catalog pipeline." ),br(),br(),
-                          "The BAltic Gene Set gene catalogue can be downloaded ",a(href="https://figshare.scilifelab.se/articles/dataset/BAGS_v1_BAltic_Gene_Set_gene_catalogue/16677252", "here")
+                          tags$a(href="https://github.com/EnvGen/mix_assembly_pipeline", target="_blank", " Mix-assembly Gene Catalog pipeline." ),br(),br(),
+                          "The BAltic Gene Set gene catalogue can be downloaded ",tags$a(href="https://figshare.scilifelab.se/articles/dataset/BAGS_v1_BAltic_Gene_Set_gene_catalogue/16677252", target="_blank", "here")
                         ),
                         br(),
                         embed_url("https://www.youtube.com/watch?v=PNqEjTsNxIs&pp=ygUrZXZhbHVhdGluZyBtZXRhZ2Vub21pYyBhc3NlbWJseSBhcHByb2FjaGVzIA%3D%3D"),
                         br(),
                         p(
                           "When using the BAGS gene catalogue, please cite:",br(),br(),
-                          a(style= "font-size:14px",href= 'https://doi.org/10.1186/s40168-022-01259-2', "1. Delgado LF, Andersson AF. Evaluating metagenomic assembly approaches for biome-specific gene catalogues. Microbiome 10, 72 (2022)", br()),
-                          a(style= "font-size:14px",href= 'https://doi.org/10.1038/s42003-020-0856-x', "2. Alneberg J, et. al. Ecosystem-wide metagenomic binning enables prediction of ecological niches from genomes. Commun Biol 3, 119 (2020)",br()),
+                          tags$a(style= "font-size:14px",href= 'https://doi.org/10.1186/s40168-022-01259-2', target="_blank", "1. Delgado LF, Andersson AF. Evaluating metagenomic assembly approaches for biome-specific gene catalogues. Microbiome 10, 72 (2022)", br()),
+                          tags$a(style= "font-size:14px",href= 'https://doi.org/10.1038/s42003-020-0856-x', target="_blank", "2. Alneberg J, et. al. Ecosystem-wide metagenomic binning enables prediction of ecological niches from genomes. Commun Biol 3, 119 (2020)",br()),
                         ),
 
 
