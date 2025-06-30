@@ -31,10 +31,11 @@ ENV PATH="/opt/ncbi-blast-2.13.0+/bin:${PATH}"
 RUN R -e "install.packages('remotes')" \
     && R -e "install.packages('BiocManager')" \
     && R -e "BiocManager::install('KEGGREST')" \
+    && R -e "remotes::install_version('rBLAST', repos = 'https://bioc.r-universe.dev', dependencies= T, version='1.5.0')" \
     && R -e "remotes::install_version('tidyverse', version = '2.0.0', dependencies= T)" \
     && R -e "remotes::install_version('arrow', version = '14.0.0', dependencies= T)" \
     && R -e "remotes::install_version('data.table', version = '1.14.8', dependencies= T)" \
-    && R -e "remotes::install_version('rBLAST', repos = 'https://mhahsler.r-universe.dev', dependencies= T, version='0.99.0')" \
+    #&& R -e "remotes::install_version('rBLAST', repos = 'https://mhahsler.r-universe.dev', dependencies= T, version='0.99.0')" \
     #&& R -e "remotes::install_github('mhahsler/rBLAST', dependencies= T)" \
     && R -e "remotes::install_version('leaflet', version = '2.1.2', dependencies= T)" \
     && R -e "remotes::install_version('sp', version = '1.6-1', dependencies= T)" \
@@ -60,11 +61,11 @@ RUN mkdir /data \
 
 
 RUN rm -rf /srv/shiny-server/*
-COPY /app/ /srv/shiny-server/app
-COPY .Renviron.template /srv/shiny-server/app/.Renviron
+COPY /app/ /srv/shiny-server/
+COPY .Renviron.template /srv/shiny-server/.Renviron
 COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 
-WORKDIR /srv/shiny-server/app
+WORKDIR /srv/shiny-server/
 
 RUN chown -R shiny:shiny . && \
     chmod ug+x start-script.sh
