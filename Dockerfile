@@ -1,6 +1,4 @@
 # Use an official R runtime as a parent image
-#FROM rocker/shiny:latest
-#FROM rocker/shiny:4.5
 FROM rocker/shiny:4.4
 #  "shiny"
 
@@ -46,9 +44,9 @@ COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 WORKDIR /srv/shiny-server/
 
 # Ensure that the expected user is present in the container
-RUN if id shiny &>/dev/null && [ "$(id -u shiny)" -ne 999 ]; then \
+RUN if id shiny > /dev/null 2>&1 && [ "$(id -u shiny)" -ne 999 ]; then \
         userdel -r shiny; \
-        id -u 999 &>/dev/null && userdel -r "$(id -un 999)"; \
+        id -u 999 > /dev/null 2>&1 && userdel -r "$(id -un 999)"; \
     fi; \
     useradd -u 999 -m -s /bin/bash shiny; \
     chown -R shiny:shiny /srv/shiny-server/ /var/lib/shiny-server/ /var/log/shiny-server/
